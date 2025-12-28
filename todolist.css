@@ -1,0 +1,93 @@
+
+body {
+  background-color: #FADADD;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+.todo_container {
+  background-color: #fff;
+  border-radius: 15px;
+  width: 350px;
+  max-height: 800px;
+  padding: 24px 18px;
+  margin: 40px auto;
+}
+
+
+h2 {
+  text-align: center;
+  color: #c47487;
+  margin: 0 0 18px 0;
+}
+
+
+.inline {
+  display: flex;
+  gap: 10px;
+}
+
+.inline input[type="text"] {
+  flex: 1; /* fill space beside button */
+  border-radius: 10px;
+  height: 30px;
+  border: solid 2px #ababab;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+.add_btn {
+  width: 60px;
+  height: 35px;
+  cursor: pointer;
+  background-color: #c47487;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+}
+.add_btn:hover{
+    background-color: #5e0b0b;
+}
+
+
+ul {
+  list-style: none; 
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+
+.tasksample {
+  display: flex;
+  align-items: center; 
+  gap: 10px;           
+  padding: 7px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.tasksample span {
+  flex: 1; /* stretch text to push button to right */
+  font-size: 15px;
+}
+
+.delete-btn {
+  width: 60px;
+  height: 35px;
+  cursor: pointer;
+  background-color: #b5e6f3;
+  border-radius: 5px;
+  color: #000000;
+  border: none;
+  margin-left: auto; /* push button to far right */
+}
+.delete-btn:hover{
+    background-color: #033d4f;
+    color: #ffffff;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
