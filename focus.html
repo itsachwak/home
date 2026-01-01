@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo list</title>
+    <link rel="stylesheet" href="todolist.css">
+</head>
+<body>
+    <header>
+        <h3><a href="index.html"><b>anti-</b><strong>brain rot</strong></a></h3>
+       <nav>
+          <a href="">Light</a>
+          <a href="">DoomsCrolling</a>
+          <a href="learn.html">Learn& Reset </a>
+         <a href="focus.html">Focus</a> 
+      </nav>
+    </header>
+            <div class="todo_container">
+              <h2>your daily todo-list</h2>
+               <form class="inline" id="fodoform">
+                  <input type="text" id="inputtxt" placeholder="enter your goal my love 🩷..." required>
+                  <button class="add_btn" type="submit">add</button>  
+               </form>
+               <ul id="todo-list">
+                  <li class="tasksample">
+                    <input type="checkbox" id="taskCheckbox">
+                    <span id="texttask">pray tahajud</span>
+                    <button class="delete-btn" id="delete-btn">delate</button>
+                  </li>
+              </ul>
+              <button id="msg" class="msg">message for you love</button>
+              
+               
+            </div>
+            <script>
+            const checkbox = document.getElementById("taskCheckbox");
+            const text = document.getElementById("texttask");
+            checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+             text.style.textDecoration = "line-through";
+            } else {
+             text.style.textDecoration = "none";
+            }
+            });
+            const form = document.getElementById("fodoform");
+            const input = document.getElementById("inputtxt");
+            const list = document.getElementById("todo-list");
+            
+            form.addEventListener('submit', function(e) {
+            e.preventDefault(); // prevent page reload
+            const tasktext = input.value.trim();
+            
+            if(tasktext) {
+             const li = document.createElement('li');
+             li.className = "tasksample"; // this ensures your CSS applies fel jded
+              //$ rahi t7ot text mta3 ltask hna
+             li.innerHTML = `
+                 <input type="checkbox">
+                 <span>${tasktext}</span>
+                 <button class="delete-btn">delete</button>
+             `;
+             list.appendChild(li); //appendchild t7ot l element jdida f list add the new task to the list
+             input.value = ""; // clear input
+            }
+            });
+            
+            // Delete button functionality
+            list.addEventListener('click', function(e) {
+            if(e.target.classList.contains('delete-btn')) {//e.target is the element clicked 
+                      //if the btn delete is clicked than remove
+             e.target.parentElement.remove();//parentElement is the li containing the button
+            }
+            });
+            
+            
+            document.getElementById("msg").addEventListener("click", function() {
+            
+            alert("Hey there! just wanted to tell you that progress matters more . Strive to improve leave perfection to its Creator ,it belongs to Allah it's not ours.");
+            
+            
+            });
+            
+            </script>
+
+    <div class="pomodoro-container">
+        <button
+         class="posebtn"
+         id="pose">pose</button>
+        <button
+         class="stopbtn"
+        onclick="if (currentIntervalId) { 
+             clearInterval(currentIntervalId); 
+             currentIntervalId = null; 
+              } 
+              if (currentButton) { 
+               currentButton.classList.remove('active'); 
+                   currentButton = null; 
+                } 
+                 document.getElementById('timer').textContent='00:00';">Stop</button>
+        <br>
+        <br>
+        <h2>Work for:</h2>
+         <button class="userchoicetiming" data-min="30">30</button>
+         <button class="userchoicetiming" data-min="45">45</button>
+         <button class="userchoicetiming" data-min="25">25</button><br>
+         <br>
+         <h2>Rest for:</h2>
+         <button class="userchoicetiming" data-min="10">10</button>
+         <button class="userchoicetiming" data-min="15">15</button>
+         <button class="userchoicetiming" data-min="5">5</button><br>
+         <br>
+         <h1>you have  </h1>
+         <H2 id="timer">00:00</h2>
+
+
+            <audio id="beep-sound" src="funny-alarm-317531.mp3" preload="auto"></audio>
+
+      <script>
+let currentIntervalId = null; // running interval
+let currentButton = null;     // active timer button
+let remainingTime = 0;        // track remaining time for pause/resume
+
+function pomodoro(timeInSecond, display, button) {
+    // If there's already a timer running, stop it
+    if (currentIntervalId) {
+        clearInterval(currentIntervalId);
+        currentIntervalId = null;
+    }
+
+    // Update active button styling
+    if (currentButton) currentButton.classList.remove('active');
+    currentButton = button;
+    if (currentButton) currentButton.classList.add('active');
+
+    remainingTime = timeInSecond;
+
+    currentIntervalId = setInterval(() => {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+
+        display.textContent =
+            (minutes < 10 ? "0" : "") + minutes + ":" +
+            (seconds < 10 ? "0" : "") + seconds;
+
+        remainingTime--;
+
+        if (remainingTime < 0) {
+            clearInterval(currentIntervalId);
+            currentIntervalId = null;
+            display.textContent = "Time's up!";
+
+            // Play the beep sound
+            const beep = document.getElementById("beep-sound");
+            if (beep) beep.play();
+
+            if (currentButton) {
+                currentButton.classList.remove('active');
+                currentButton = null;
+            }
+
+            // Reset Pose button
+            const poseBtn = document.getElementById("pose");
+            poseBtn.textContent = "Pose";
+        }
+    }, 1000);
+}
+
+// Handle the pose/pause button
+const poseBtn = document.getElementById("pose");
+poseBtn.addEventListener("click", () => {
+    if (!currentIntervalId && remainingTime > 0) {
+        // Resume timer
+        pomodoro(remainingTime, document.getElementById("timer"), currentButton);
+        poseBtn.textContent = "Pose"; // back to pause
+    } else if (currentIntervalId) {
+        // Pause timer
+        clearInterval(currentIntervalId);
+        currentIntervalId = null;
+        poseBtn.textContent = "Continue";
+    }
+});
+
+// Timer buttons
+window.onload = function() {
+    const buttons = document.querySelectorAll('.userchoicetiming');
+    const display = document.getElementById('timer');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const minutes = parseInt(btn.dataset.min, 10);
+            if (isNaN(minutes)) return;
+            const timeInSecond = minutes * 60;
+            pomodoro(timeInSecond, display, btn);
+
+            // Reset Pose button when new timer starts
+            const poseBtn = document.getElementById("pose");
+            poseBtn.textContent = "Pose";
+        });
+    });
+};
+</script>
+    </div>
+     <br>
+
+
+    
+</div>
+</body>
+</html>
